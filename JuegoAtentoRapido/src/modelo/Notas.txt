@@ -1,0 +1,187 @@
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////
+						JuegoAtentoRapido
+
+Clase: Cuadro
+
+Proposito: almacenar cuadros de colores.
+	   Estos generados al azar.
+	   Y devolverlos.
+
+Atributos:
+	string->colorCuadro: almacena los colores.
+
+Metodos:
+	string->devolverColorCuadro: retorna una dato string.
+	Esta función se compone de una ramdon que apartir de un número
+	da un string. (Ejemplo: rojo, azul, verde)
+
+(Flowlayout permite alineación vertica y horizontal)
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+Clase: ControlAtentoRapido
+
+Proposito: Controlar el estado del juego atento rápido.
+	   *Tener 3 vidas.
+		-Tener un restador de vidas
+	   *Tener un vector de 10 colores.
+	   *Movimiento, si es true pasa y suma 5 puntos y suma un acierto,
+	    si es false pasa y suma 1 en error.
+	   *Tener 8 niveles
+		-Este empieza en 3 cuadros llega hasta 10
+		-Tener un level up, que se haga despues de 10 puntos.
+		-Se empieza en el nivel 1.
+	   *Hay 3 estados
+		-Ganó = 1 (Debe tener 12 aciertos)
+		-Perdió = 2 (Debe tener 3 errores)
+		-Jugando = 3 (Aún no hay suficientes aciertos o errores)
+	   *MostrarCuadros, seria la cantidad de cuadros (colores) que mostrará el vector
+	    Será level+2.
+	   *Empezará con 3 vidas, movimiento (true), 3 cuadros, 
+GUI->	   *Variable que controle si el usuario acertó.
+
+Atributos:
+	vidas, aciertos, errores, puntuación, level:int
+	movimientos, iguales:boolean
+	cuadro[10]:string
+	cuadro1,cuadro2,cuadro3,cuadro4,cuadro5,cuadro6,cuadro7,cuadro8,cuadro9,cuadro10:string
+
+Metodos:
+	ControlAtentoRapido()
+		Crear los 10 objetos tipo Cuadro.
+		Definir el movimiento en true.
+		Darle tamaño al vector string.
+
+	sacarCuadros():void
+		Saca una cantidad de objetos tipo Cuadros del vector cuadro.
+		Retorna el valor de cada cuadro.
+
+	escogerCuadro():int
+		Tomar uno de los objetos random del vector.
+		
+
+	cambiarCuadro(int cuadro):void
+		
+
+	estadoJuego():void
+		Si movimientos == false
+			Si aciertos == 12 y vidas > 0, entonces estado = 1; Ganó.
+			Si errores == 3 y vidas == 0, entonces estado = 2; perdiste.
+			sino, estado = 3, movimientos = true.
+		sino compararCuadros
+
+	compararCuadros():void
+		for i = 0 hasta level+2 de Cuadros[10]:
+		{
+			for j = 0 hasta (level-1)+2 de Cuadros[10]:
+			{
+				si ( (i!=j) and (Cuadros[i]==Cuadros[j]) )
+					iguales = true
+				sino
+					iguales = false
+			}	
+		}
+
+	logroDar():void
+		si (movimiento==false)
+			si(iguales==true)
+				si (usuario==true)
+					aciertos++
+					puntuacion+=5*level
+					si ((aciertos modulo 2) == 0)
+						level++
+					*Por cada 2 aciertos subir un nivel, en ciclos if, elif, else.
+				sino
+					vidas--
+					errores++
+			sino
+				vidas--
+				errores++
+
+	setUsuario(boolean arg):void
+		usuario = arg
+
+	setAbandonar():void
+		estado=2 y movimiento=false
+
+	setReiniciar():void
+		No tengo ni mierda de idea
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+Clase: GUIAtentoRapido
+
+Proposito:
+	Generar la interfaz gráfica del juego Atento Rápido, esta debe esta compuesta por:
+		*Escuchas para el boton abandonar, reiniciar y pulsor (boton para comparar).
+		*El pulsor se activa cuando hay 2 cuadros identicos, para los aciertos del jugador.
+		*Temporizador para el jugador, si este no pincha el pulsor antes de terminar el tiempo y
+		 hay 2 imagenes iguales se le penalizará con un error más y una vida menos.
+		*Aumentar numero de cuadros en cada level up.
+
+Atributos:
+	ventanaInicio, ventanaJuego, ventanaResultados: JFrame
+	cuadro1,cuadro2,cuadro3,cuadro4,cuadro5,cuadro6,cuadro7,cuadro8,cuadro9,cuadro10: JLabel
+	vidas, aciertos, errores, puntuación, level, finJuego: JLabel
+	jugar, abandonar, reiniciar, pulsor: JButton
+	imagen: ImagenIcon
+	mensajes: JTextArea
+	escucha: Escucha
+
+(pulsor puede ser solo botón o una imagen que funcione como boton que se pueda presionar, la complejidad lo decidirá).
+
+
+Metodos:
+	GUIAtentoRapido()
+
+	init():void
+		
+
+	juego():void
+		
+
+	end():void
+
+###->
+
+	SubClase: Escucha (Implementa ActionListener, MouseListener)
+
+	Proposito: Captar los eventos de los botones y el rator y apartir de ellos activar las funciones de ControlAtentoRapido
+		   según cada acción que se efectue
+
+	Atributos:
+	
+	Metodos:
+		actionPeformed(ActionEvent eventAction)
+			si (accion == jugar)
+				juego()
+			si (accion == pulsor)
+				control.compararCuadros
+			si (accion == timer)
+				control.setUsuario(false)
+			si (accion == abandonar)
+				control.setAbadonar()
+			si (accion == reiniciar)
+				control.setReiniciar()
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+Clase: Borde
+
+//	
+(get.getsource==timer  ->  validador de timer)
+Timer.stop
+Para modificar el tiem es con setDelay();
+Timer.star()
+
+Para eliminar objetos del contraints es con remove.(objeto,contraints)
+
+
+3=1
+4=2
+5=3
+6=4
+7=5
+8=6
+9=7
+10=8
