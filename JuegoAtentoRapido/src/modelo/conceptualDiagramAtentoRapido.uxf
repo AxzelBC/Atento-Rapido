@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<diagram program="umlet" version="14.3.0">
+  <zoom_level>8</zoom_level>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>8</x>
+      <y>48</y>
+      <w>480</w>
+      <h>208</h>
+    </coordinates>
+    <panel_attributes>ControlAtentoRapido
+--
+vidas, aciertos, errores, puntuación, level:int
+movimientos, iguales:boolean
+cuadro[10]:string
+cuadro1,cuadro2,cuadro3,cuadro4,cuadro5,cuadro6,cuadro7,cuadro8,cuadro9,cuadro10:string
+--
+ControlAtentoRapido()
+sacarCuadros():void
+escogerCuadro():int
+cambiarCuadro(int cuadro):void
+estadoJuego():void
+compararCuadros():void
+logroDar():void
+setUsuario(boolean arg):void
+setAbandonar:()
+setReiniciar:()</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>160</x>
+      <y>320</y>
+      <w>152</w>
+      <h>56</h>
+    </coordinates>
+    <panel_attributes>Cuadro
+--
+colorCuadro:string
+--
+devolverColorCuadro():string</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>232</x>
+      <y>248</y>
+      <w>24</w>
+      <h>88</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;&lt;&lt;-</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;90.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>584</x>
+      <y>128</y>
+      <w>488</w>
+      <h>152</h>
+    </coordinates>
+    <panel_attributes>GUIAtentoRapido
+--
+ventanaInicio, ventanaJuego, ventanaResultados: JFrame
+cuadro1,cuadro2,cuadro3,cuadro4,cuadro5,cuadro6,cuadro7,cuadro8,cuadro9,cuadro10: JLabel
+vidas, aciertos, errores, puntuación, level, finJuego: JLabel
+jugar, abandonar, reiniciar, pulsor: JButton
+imagen: ImagenIcon
+mensajes: JTextArea
+--
+GUIAtentoRapido()
+init():void
+juego():void
+end():void</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>736</x>
+      <y>344</y>
+      <w>176</w>
+      <h>40</h>
+    </coordinates>
+    <panel_attributes>_object: Class_Escucha
+--
+--
+actionPeformed(ActionEvent):void</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>816</x>
+      <y>272</y>
+      <w>176</w>
+      <h>88</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;.
+&lt;&lt;instanceOfGUIAtentoRapido&gt;&gt;</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;90.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>776</x>
+      <y>32</y>
+      <w>96</w>
+      <h>40</h>
+    </coordinates>
+    <panel_attributes>Principal
+--
+--
+main()</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>816</x>
+      <y>64</y>
+      <w>24</w>
+      <h>80</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;80.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>480</x>
+      <y>128</y>
+      <w>120</w>
+      <h>88</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-</panel_attributes>
+    <additional_attributes>10.0;10.0;130.0;90.0</additional_attributes>
+  </element>
+</diagram>
