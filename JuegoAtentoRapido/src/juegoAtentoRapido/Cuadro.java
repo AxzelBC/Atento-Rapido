@@ -1,12 +1,33 @@
+/*
+ * @Autor Alejandro Cardona Mosquera
+ * 
+ * @Código 2022499-2711
+ * 
+ * @Feche 12 de marzo de 2021
+ * 
+ * @Descripción: esta clase construye un vector de "cuadros" compuesto de Strings,
+ * 				 cada uno correspondiente a cada color para el jueo Atento Rápido.
+ */
+
+
 package juegoAtentoRapido;
 
 import java.util.Random;
 
+
+/**
+ * The Class Cuadro.
+ */
 public class Cuadro {
 
 	//Atributos
 	private String colorCuadro;
 	
+	/**
+	 * Gets the color cuadro.
+	 *
+	 * @return the color cuadro
+	 */
 	//Metodos
 	public String getColorCuadro() {
 		Random cualquier = new Random();

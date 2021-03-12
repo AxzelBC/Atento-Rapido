@@ -1,14 +1,23 @@
+/*
+ * @Autor Alejandro Cardona Mosquera
+ * 
+ * @Código 2022499-2711
+ * 
+ * @Feche 12 de marzo de 2021
+ * 
+ * @Descripción clase encargada de la implementación de la GUI del juego Atento Rápido.
+ */
+
+
 package juegoAtentoRapido;
 
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 
-import java.awt.BorderLayout;
+
 import java.awt.Color;
-import java.awt.Component;
 import java.awt.Container;
 import java.awt.Dimension;
-import java.awt.FlowLayout;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
@@ -19,28 +28,41 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.Timer;
-import javax.swing.border.TitledBorder;
 
 
+/**
+ * The Class GUIAtentoRapido.
+ */
 public class GUIAtentoRapido extends JFrame{
 
 	//Atributos
-	private JPanel ventanaInicio, ventanaJuego, ventanaResultados;
+	private JPanel ventanaInicio, ventanaJuego;
+	
 	private JLabel cuadro1,cuadro2,cuadro3,cuadro4,cuadro5,cuadro6,cuadro7,cuadro8,cuadro9,cuadro10;
-	private JLabel vidas, aciertos, errores, puntuacion, level, finJuego;
+	
+	private JLabel vidas, aciertos, errores, puntuacion, level;
+	
 	private JTextField valorVidas, valorPuntuacion, valorAciertos, valorErrores, valorLevel;
+	
 	private JButton jugar, abandonar, reiniciar, pulsor;
+	
 	private ImageIcon imagen;
-	private JTextArea mensajes;
+	
 	private Escucha escucha;
+	
 	private ControlAtentoRapido control;
+	
 	private JFrame GUIAtentoRapido;
+	
 	private Timer tempo, borde;
+	
 	private int tiempo;
 	
+	/**
+	 * Instantiates a new GUI atento rapido.
+	 */
 	//Metodos
 	public GUIAtentoRapido() {
 		
@@ -57,7 +79,6 @@ public class GUIAtentoRapido extends JFrame{
 		//Titulo de la ventana
 		this.setTitle("Atento Rápido");
 		//Tamaño de ventana
-		//this.pack();
 		this.setSize(1350,763);
 		//Parte de la pantalla donde se ejecuta
 		this.setLocationRelativeTo(null);
@@ -69,6 +90,9 @@ public class GUIAtentoRapido extends JFrame{
 		this.setVisible(true);
 	}
 	
+	/**
+	 * Inits the.
+	 */
 	public void init(){
 		//Set up container - layout
 		this.getContentPane().setLayout(new GridBagLayout());
@@ -88,15 +112,14 @@ public class GUIAtentoRapido extends JFrame{
 		ventanaInicio.setPreferredSize(new Dimension(1260,720));
 		constraints.gridx=0;
 		constraints.gridy=0;
-		//constraints.gridwidth=1;
-		//constraints.gridheight=1;
-		//constraints.fill=GridBagConstraints.NONE;
-		//constraints.anchor=GridBagConstraints.CENTER;
 		add(ventanaInicio,constraints);
 	}
 	
 	
 	
+	/**
+	 * Juego.
+	 */
 	public void juego() {
 		//Set up container - layout
 		this.getContentPane().setLayout(new GridBagLayout());
@@ -251,6 +274,9 @@ public class GUIAtentoRapido extends JFrame{
 	
 	
 	
+	/**
+	 * End.
+	 */
 	public void end() {
 		Container contenedor= this.getContentPane();
 		contenedor.setLayout(new GridLayout(3,3));
@@ -282,6 +308,9 @@ public class GUIAtentoRapido extends JFrame{
 	
 	
 	
+	/**
+	 * Borrar juego.
+	 */
 	public void borrarJuego() {
 		this.tempo.stop();
 		this.borde.stop();
@@ -303,6 +332,9 @@ public class GUIAtentoRapido extends JFrame{
 	
 	
 	
+	/**
+	 * Opcion.
+	 */
 	public void opcion() {
 		switch(control.getEstado()) {
 		case 1:
@@ -323,8 +355,16 @@ public class GUIAtentoRapido extends JFrame{
 	
 	
 	
+	/**
+	 * The Class Escucha.
+	 */
 	private class Escucha implements ActionListener{
 
+		/**
+		 * Action performed.
+		 *
+		 * @param eventAction the event action
+		 */
 		@Override
 		public void actionPerformed(ActionEvent eventAction) {
 			
