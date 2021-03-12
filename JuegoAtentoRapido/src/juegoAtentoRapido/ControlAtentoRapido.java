@@ -18,58 +18,39 @@ public class ControlAtentoRapido {
 		
 		movimientos = true;
 		level = 1;
-		nCuadros = 10;
+		nCuadros = 3;
 		vidas = 3;
+		puntuacion = 0;
+		aciertos = 0;
+		errores = 0;
 		
 		cuadros = new String[10];
 		sacarCuadros();
 	}
 	
 	
-	/*
-*	public void sacarCuadros() {
-*		for (int i = 0; i<nCuadros; i++) {
-*			if (repetido(cuadros, cuadro.getColorCuadro()) == false) {
-*				cuadros[i] = cuadro.getColorCuadro();
-*	        }
-*		}
-*		
-*	}
-*	public static boolean repetido(String[] array, String valor) {
-*		boolean repetido = false;
-*		for (int i = 0; i<nCuadros && !repetido; i++) {
-*		    if (array[i] == valor) {// si el valor generado aleatoriamente esta
-*		                            // dentro del array le marcamos como true y
-*		                            // por lo tanto no lo metera en el array
-*		                            // al poner en la condicion del bucle que 
-*		                            // repetido sea false, cuando lo ponemos a true
-*		                            // salimos y evitamos iteraciones inecesarias
-*		        repetido = true;
-*		    }
-*		}
-*		   return repetido;
-*		}
-	*/
-
-	
 	public void sacarCuadros() {
 		for (int i = 0; i<nCuadros; i++) {
 			cuadros[i] = cuadro.getColorCuadro();
 		}
 		
-		for (int i = 0; i<nCuadros; i++) {
-			for (int j = 0; j<nCuadros; j++) {
-				if(cuadros[i]==cuadros[j]) {
+		int i=0;
+		while(i<nCuadros) {
+			for(int j = 0; j < nCuadros; j++) {
+				if((i!=j)&&(cuadros[i]==cuadros[j])) {
 					cuadros[j] = cuadro.getColorCuadro();
+					i=0;
+					j=0;
 				}
 			}
+			i++;
 		}
 	}
 	
 	
 	public void escogerCuadro() {
 		Random cualquier = new Random();
-		prox = cualquier.nextInt(nCuadros)+1;
+		prox = cualquier.nextInt(nCuadros);
 	}
 	
 	
@@ -78,8 +59,7 @@ public class ControlAtentoRapido {
 	}
 	
 	
-	public void estadoJuego(boolean quien) {
-		usuario = quien;
+	public void estadoJuego() {
 		if(movimientos==false) {
 			if((aciertos==12) && (vidas>0)) {
 				estado = 1; //Win
@@ -100,13 +80,11 @@ public class ControlAtentoRapido {
 	
 	
 	public void compararCuadros() {
-		for (int i = 0; i == nCuadros; i++) {
-			for (int j = 0; j == (level+2); j++) {
+		iguales = false;
+		for (int i = 0; i < nCuadros; i++) {
+			for (int j = 0; j < nCuadros; j++) {
 				if ((i!=j) && (cuadros[i]==cuadros[j])) {
 					iguales = true;
-				}
-				else {
-					iguales = false;
 				}
 			}
 		}
@@ -114,7 +92,8 @@ public class ControlAtentoRapido {
 	}
 	
 	
-	public void logroDar() {
+	public void logroDar(boolean quien) {
+		this.usuario = quien;
 		if(movimientos==false) {
 			if((iguales==true) && (usuario==true)) {
 				aciertos++;
@@ -147,6 +126,7 @@ public class ControlAtentoRapido {
 					level = 8;
 					nCuadros = 10;
 				}
+				sacarCuadros();
 			}
 			else if((iguales==false) && (usuario==false)) {
 				estado = 3;
@@ -155,6 +135,8 @@ public class ControlAtentoRapido {
 			else {
 				vidas--;
 				errores++;
+				movimientos = false;
+				sacarCuadros();
 			}
 		}
 	}
@@ -172,7 +154,18 @@ public class ControlAtentoRapido {
 	
 	
 	public void setReinicio() {
-		//ControlAtentoRapido();
+		cuadro = new Cuadro();
+		
+		movimientos = true;
+		level = 1;
+		nCuadros = 3;
+		vidas = 3;
+		puntuacion = 0;
+		aciertos = 0;
+		errores = 0;
+		
+		cuadros = new String[10];
+		sacarCuadros();
 	}
 ///////////////////////////////////////////////////////////////////////////////
 	public int getVidas() {
@@ -199,14 +192,6 @@ public class ControlAtentoRapido {
 		return estado;
 	}
 
-	public boolean isMovimientos() {
-		return movimientos;
-	}
-
-	public boolean isIguales() {
-		return iguales;
-	}
-
 	public boolean isUsuario() {
 		return usuario;
 	}
@@ -214,52 +199,8 @@ public class ControlAtentoRapido {
 	public String getCuadros(int index) {
 		return cuadros[index];
 	}
-
-	public Cuadro getCuadro() {
-		return cuadro;
-	}
 	
 	public int getProx() {
 		return prox;
-	}
-
-	public void setVidas(int vidas) {
-		this.vidas = vidas;
-	}
-
-	public void setAciertos(int aciertos) {
-		this.aciertos = aciertos;
-	}
-
-	public void setErrores(int errores) {
-		this.errores = errores;
-	}
-
-	public void setPuntuacion(int puntuacion) {
-		this.puntuacion = puntuacion;
-	}
-
-	public void setLevel(int level) {
-		this.level = level;
-	}
-
-	public void setEstado(int estado) {
-		this.estado = estado;
-	}
-
-	public void setMovimientos(boolean movimientos) {
-		this.movimientos = movimientos;
-	}
-
-	public void setIguales(boolean iguales) {
-		this.iguales = iguales;
-	}
-
-	public void setCuadros(String[] cuadros) {
-		this.cuadros = cuadros;
-	}
-
-	public void setCuadro(Cuadro cuadro) {
-		this.cuadro = cuadro;
 	}
 }

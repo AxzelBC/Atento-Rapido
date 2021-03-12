@@ -6,7 +6,9 @@ import javax.swing.ImageIcon;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
+import java.awt.Container;
 import java.awt.Dimension;
+import java.awt.FlowLayout;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
@@ -20,6 +22,7 @@ import javax.swing.JPanel;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.Timer;
+import javax.swing.border.TitledBorder;
 
 
 public class GUIAtentoRapido extends JFrame{
@@ -27,8 +30,8 @@ public class GUIAtentoRapido extends JFrame{
 	//Atributos
 	private JPanel ventanaInicio, ventanaJuego, ventanaResultados;
 	private JLabel cuadro1,cuadro2,cuadro3,cuadro4,cuadro5,cuadro6,cuadro7,cuadro8,cuadro9,cuadro10;
-	private JLabel vidas, aciertos, errores, puntuación, level, finJuego;
-	private JTextField valorVidas;
+	private JLabel vidas, aciertos, errores, puntuacion, level, finJuego;
+	private JTextField valorVidas, valorPuntuacion, valorAciertos, valorErrores, valorLevel;
 	private JButton jugar, abandonar, reiniciar, pulsor;
 	private ImageIcon imagen;
 	private JTextArea mensajes;
@@ -41,13 +44,15 @@ public class GUIAtentoRapido extends JFrame{
 	//Metodos
 	public GUIAtentoRapido() {
 		
-		this.tiempo = 6000;
+		this.tiempo = 3000;
 		GUIAtentoRapido=this;
 		control = new ControlAtentoRapido();
 		escucha = new Escucha();
 		
+		tempo = new Timer(tiempo,escucha);
+		borde = new Timer((tiempo / 2),escucha);
+		
 		init();
-		//juego();
 		
 		//Titulo de la ventana
 		this.setTitle("Atento Rápido");
@@ -59,7 +64,7 @@ public class GUIAtentoRapido extends JFrame{
 		//Cambio de tamaño por el usuario
 		this.setResizable(false);
 		//Boton de cerrar
-		this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		//Visibilidad de la ventana
 		this.setVisible(true);
 	}
@@ -88,23 +93,20 @@ public class GUIAtentoRapido extends JFrame{
 		//constraints.fill=GridBagConstraints.NONE;
 		//constraints.anchor=GridBagConstraints.CENTER;
 		add(ventanaInicio,constraints);
-
 	}
+	
+	
 	
 	public void juego() {
 		//Set up container - layout
 		this.getContentPane().setLayout(new GridBagLayout());
 		GridBagConstraints constraints = new GridBagConstraints();
 		
-		
-		tempo = new Timer(tiempo,escucha);
-		borde = new Timer((tiempo / 2),escucha);
 
 		this.setBackground(Color.CYAN);
 		
 		imagen = new ImageIcon("src/imagenes/"+control.getCuadros(0)+".png");
 		cuadro1 = new JLabel(imagen);
-		cuadro1.setBorder(BorderFactory.createLineBorder(Color.darkGray));
 		constraints.gridx=4;
 		constraints.gridy=5;
 		constraints.gridwidth=1;
@@ -183,6 +185,55 @@ public class GUIAtentoRapido extends JFrame{
 		constraints.gridheight=1;
 		add(cuadro10,constraints);
 		
+		
+		
+		ventanaJuego = new JPanel();
+		ventanaJuego.setLayout(new GridLayout(6,1));
+		
+		vidas = new JLabel("VIDAS");
+		valorVidas = new JTextField(2);
+		valorVidas.setEditable(false);
+		valorVidas.setText(String.valueOf(control.getVidas()));
+		
+		level = new JLabel("NIVEL");
+		valorLevel = new JTextField(2);
+		valorLevel.setEditable(false);
+		valorLevel.setText(String.valueOf(control.getLevel()));
+		
+		puntuacion = new JLabel("PUNTUACIÓN");
+		valorPuntuacion = new JTextField(2);
+		valorPuntuacion.setEditable(false);
+		valorPuntuacion.setText(String.valueOf(control.getPuntuacion()));
+		
+		ventanaJuego.add(vidas);
+		ventanaJuego.add(valorVidas);
+		ventanaJuego.add(puntuacion);
+		ventanaJuego.add(valorPuntuacion);
+		ventanaJuego.add(level);
+		ventanaJuego.add(valorLevel);
+		constraints.gridx=0;
+		constraints.gridy=0;
+		constraints.gridwidth=3;
+		add(ventanaJuego,constraints);
+		
+		
+		
+		abandonar = new JButton("Abandonar");
+		abandonar.addActionListener(escucha);
+		constraints.gridx=0;
+		constraints.gridy=1;
+		constraints.gridwidth=1;
+		constraints.gridheight=1;
+		add(abandonar,constraints);
+		
+		reiniciar = new JButton("reiniciar");
+		reiniciar.addActionListener(escucha);
+		constraints.gridx=0;
+		constraints.gridy=2;
+		constraints.gridwidth=1;
+		constraints.gridheight=1;
+		add(reiniciar,constraints);
+		
 		pulsor = new JButton("STOP");
 		pulsor.addActionListener(escucha);
 		constraints.gridx=8;
@@ -194,14 +245,46 @@ public class GUIAtentoRapido extends JFrame{
 		GUIAtentoRapido.setVisible(false);
 		GUIAtentoRapido.setVisible(true);
 		
+		borde.start();
 		tempo.start();
 	}
 	
+	
+	
 	public void end() {
+		Container contenedor= this.getContentPane();
+		contenedor.setLayout(new GridLayout(3,3));
 		
+		puntuacion = new JLabel("PUNTUACIÓN");
+		aciertos = new JLabel("ACIERTOS");
+		errores = new JLabel("ERRORES");
+		valorPuntuacion = new JTextField(2);
+		valorPuntuacion.setEditable(false);
+		valorAciertos = new JTextField(2);
+		valorAciertos.setEditable(false);
+		valorErrores = new JTextField(2);
+		valorErrores.setEditable(false);
+		contenedor.setBackground(Color.WHITE);
+		contenedor.add(puntuacion);
+		contenedor.add(valorPuntuacion);
+		contenedor.add(aciertos);
+		contenedor.add(valorAciertos);
+		contenedor.add(errores);
+		contenedor.add(valorErrores);
+		
+		valorPuntuacion.setText(String.valueOf(control.getPuntuacion()));
+		valorAciertos.setText(String.valueOf(control.getAciertos()));
+		valorErrores.setText(String.valueOf(control.getErrores()));
+		
+		GUIAtentoRapido.setVisible(false);
+		GUIAtentoRapido.setVisible(true);
 	}
 	
+	
+	
 	public void borrarJuego() {
+		this.tempo.stop();
+		this.borde.stop();
 		GUIAtentoRapido.remove(cuadro1);
 		GUIAtentoRapido.remove(cuadro2);
 		GUIAtentoRapido.remove(cuadro3);
@@ -212,10 +295,13 @@ public class GUIAtentoRapido extends JFrame{
 		GUIAtentoRapido.remove(cuadro8);
 		GUIAtentoRapido.remove(cuadro9);
 		GUIAtentoRapido.remove(cuadro10);
+		GUIAtentoRapido.remove(ventanaJuego);
+		GUIAtentoRapido.remove(abandonar);
+		GUIAtentoRapido.remove(reiniciar);
 		GUIAtentoRapido.remove(pulsor);
-		GUIAtentoRapido.setVisible(false);
-		GUIAtentoRapido.setVisible(true);
 	}
+	
+	
 	
 	public void opcion() {
 		switch(control.getEstado()) {
@@ -228,7 +314,9 @@ public class GUIAtentoRapido extends JFrame{
 			end();
 				break;
 		case 3:
-			
+			valorVidas.setText(String.valueOf(control.getVidas()));
+			valorLevel.setText(String.valueOf(control.getLevel()));
+			valorPuntuacion.setText(String.valueOf(control.getPuntuacion()));
 				break;
 		}
 	}
@@ -248,82 +336,197 @@ public class GUIAtentoRapido extends JFrame{
 			
 			
 			//Juego
+			else if(eventAction.getSource() == borde) {
+				borde.stop();
+				control.escogerCuadro();
+				
+				switch(control.getProx()+1) {
+				case 1:
+					cuadro1.setBorder(BorderFactory.createLineBorder(Color.CYAN));
+					break;
+				case 2:
+					cuadro2.setBorder(BorderFactory.createLineBorder(Color.CYAN));
+					break;
+				case 3:
+					cuadro3.setBorder(BorderFactory.createLineBorder(Color.CYAN));
+					break;
+				case 4:
+					cuadro4.setBorder(BorderFactory.createLineBorder(Color.CYAN));
+					break;
+				case 5:
+					cuadro5.setBorder(BorderFactory.createLineBorder(Color.CYAN));
+					break;
+				case 6:
+					cuadro6.setBorder(BorderFactory.createLineBorder(Color.CYAN));
+					break;
+				case 7:
+					cuadro7.setBorder(BorderFactory.createLineBorder(Color.CYAN));
+					break;
+				case 8:
+					cuadro8.setBorder(BorderFactory.createLineBorder(Color.CYAN));
+					break;
+				case 9:
+					cuadro9.setBorder(BorderFactory.createLineBorder(Color.CYAN));
+					break;
+				case 10:
+					cuadro10.setBorder(BorderFactory.createLineBorder(Color.CYAN));
+					break;
+				}
+			}
 			else if(eventAction.getSource() == tempo) {
-				//tempo.stop();
-				control.estadoJuego(false);
+				tempo.stop();
 				control.cambiarCuadro(control.getProx());
 				
-				switch(control.getProx()) {
+				control.logroDar(false);
+				
+				imagen = new ImageIcon("src/imagenes/"+control.getCuadros(0)+".png");
+				cuadro1.setIcon(imagen);
+				imagen = new ImageIcon("src/imagenes/"+control.getCuadros(1)+".png");
+				cuadro2.setIcon(imagen);
+				imagen = new ImageIcon("src/imagenes/"+control.getCuadros(2)+".png");
+				cuadro3.setIcon(imagen);
+				imagen = new ImageIcon("src/imagenes/"+control.getCuadros(3)+".png");
+				cuadro4.setIcon(imagen);
+				imagen = new ImageIcon("src/imagenes/"+control.getCuadros(4)+".png");
+				cuadro5.setIcon(imagen);
+				imagen = new ImageIcon("src/imagenes/"+control.getCuadros(5)+".png");
+				cuadro6.setIcon(imagen);
+				imagen = new ImageIcon("src/imagenes/"+control.getCuadros(6)+".png");
+				cuadro7.setIcon(imagen);
+				imagen = new ImageIcon("src/imagenes/"+control.getCuadros(7)+".png");
+				cuadro8.setIcon(imagen);
+				imagen = new ImageIcon("src/imagenes/"+control.getCuadros(8)+".png");
+				cuadro9.setIcon(imagen);
+				imagen = new ImageIcon("src/imagenes/"+control.getCuadros(9)+".png");
+				cuadro10.setIcon(imagen);
+				
+				control.estadoJuego();
+				opcion();
+				
+				cuadro1.setBorder(BorderFactory.createEmptyBorder());
+				cuadro2.setBorder(BorderFactory.createEmptyBorder());
+				cuadro3.setBorder(BorderFactory.createEmptyBorder());
+				cuadro4.setBorder(BorderFactory.createEmptyBorder());
+				cuadro5.setBorder(BorderFactory.createEmptyBorder());
+				cuadro6.setBorder(BorderFactory.createEmptyBorder());
+				cuadro7.setBorder(BorderFactory.createEmptyBorder());
+				cuadro8.setBorder(BorderFactory.createEmptyBorder());
+				cuadro9.setBorder(BorderFactory.createEmptyBorder());
+				cuadro10.setBorder(BorderFactory.createEmptyBorder());
+				
+				borde.restart();
+				tempo.restart();
+				
+				switch(control.getProx()+1) {
 					case 1:
+						
 						imagen = new ImageIcon
-						("src/imagenes/"+control.getCuadros(control.getProx()-1)+".png");
+						("src/imagenes/"+control.getCuadros(control.getProx())+".png");
 						
 						cuadro1.setIcon(imagen);
 						break;
 					case 2:
+						
 						imagen = new ImageIcon
-						("src/imagenes/"+control.getCuadros(control.getProx()-1)+".png");
+						("src/imagenes/"+control.getCuadros(control.getProx())+".png");
 						
 						cuadro2.setIcon(imagen);
 						break;
 					case 3:
+						
 						imagen = new ImageIcon
-						("src/imagenes/"+control.getCuadros(control.getProx()-1)+".png");
+						("src/imagenes/"+control.getCuadros(control.getProx())+".png");
 						
 						cuadro3.setIcon(imagen);
 						break;
 					case 4:
+						
 						imagen = new ImageIcon
-						("src/imagenes/"+control.getCuadros(control.getProx()-1)+".png");
+						("src/imagenes/"+control.getCuadros(control.getProx())+".png");
 						
 						cuadro4.setIcon(imagen);
 						break;
 					case 5:
+						
 						imagen = new ImageIcon
-						("src/imagenes/"+control.getCuadros(control.getProx()-1)+".png");
+						("src/imagenes/"+control.getCuadros(control.getProx())+".png");
 						
 						cuadro5.setIcon(imagen);
 						break;
 					case 6:
+						
 						imagen = new ImageIcon
-						("src/imagenes/"+control.getCuadros(control.getProx()-1)+".png");
+						("src/imagenes/"+control.getCuadros(control.getProx())+".png");
 						
 						cuadro6.setIcon(imagen);
 						break;
 					case 7:
+						
 						imagen = new ImageIcon
-						("src/imagenes/"+control.getCuadros(control.getProx()-1)+".png");
+						("src/imagenes/"+control.getCuadros(control.getProx())+".png");
 						
 						cuadro7.setIcon(imagen);
 						break;
 					case 8:
+						
 						imagen = new ImageIcon
-						("src/imagenes/"+control.getCuadros(control.getProx()-1)+".png");
+						("src/imagenes/"+control.getCuadros(control.getProx())+".png");
 						
 						cuadro8.setIcon(imagen);
 						break;
 					case 9:
+						
 						imagen = new ImageIcon
-						("src/imagenes/"+control.getCuadros(control.getProx()-1)+".png");
+						("src/imagenes/"+control.getCuadros(control.getProx())+".png");
 						
 						cuadro9.setIcon(imagen);
 						break;
 					case 10:
+						
 						imagen = new ImageIcon
-						("src/imagenes/"+control.getCuadros(control.getProx()-1)+".png");
+						("src/imagenes/"+control.getCuadros(control.getProx())+".png");
 						
 						cuadro10.setIcon(imagen);
 						break;
 				}
-				GUIAtentoRapido.repaint();
-				//tempo.restart();
-			}
-			else if(eventAction.getSource() == borde) {
-				control.escogerCuadro();
-			}
-			
+			}			
 			else if(eventAction.getSource() == pulsor) {
 				tempo.stop();
+				
+				imagen = new ImageIcon("src/imagenes/"+control.getCuadros(0)+".png");
+				cuadro1.setIcon(imagen);
+				imagen = new ImageIcon("src/imagenes/"+control.getCuadros(1)+".png");
+				cuadro2.setIcon(imagen);
+				imagen = new ImageIcon("src/imagenes/"+control.getCuadros(2)+".png");
+				cuadro3.setIcon(imagen);
+				imagen = new ImageIcon("src/imagenes/"+control.getCuadros(3)+".png");
+				cuadro4.setIcon(imagen);
+				imagen = new ImageIcon("src/imagenes/"+control.getCuadros(4)+".png");
+				cuadro5.setIcon(imagen);
+				imagen = new ImageIcon("src/imagenes/"+control.getCuadros(5)+".png");
+				cuadro6.setIcon(imagen);
+				imagen = new ImageIcon("src/imagenes/"+control.getCuadros(6)+".png");
+				cuadro7.setIcon(imagen);
+				imagen = new ImageIcon("src/imagenes/"+control.getCuadros(7)+".png");
+				cuadro8.setIcon(imagen);
+				imagen = new ImageIcon("src/imagenes/"+control.getCuadros(8)+".png");
+				cuadro9.setIcon(imagen);
+				imagen = new ImageIcon("src/imagenes/"+control.getCuadros(9)+".png");
+				cuadro10.setIcon(imagen);
+				
+				control.logroDar(true);
+				control.estadoJuego();
+				opcion();
+				
+				borde.restart();
+				tempo.restart();
+			}
+			else if(eventAction.getSource() == abandonar) {
+				control.setAbandonar();
+				opcion();
+			}
+			else if(eventAction.getSource() == reiniciar) {
+				control.setReinicio();
 			}
 		}
 	}
