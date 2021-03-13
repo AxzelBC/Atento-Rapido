@@ -1,0 +1,1 @@
+typeSearchIndex = [{"l":"All Classes","u":"allclasses-index.html"},{"p":"juegoAtentoRapido","l":"ControlAtentoRapido"},{"p":"juegoAtentoRapido","l":"Cuadro"},{"p":"juegoAtentoRapido","l":"GUIAtentoRapido"},{"p":"juegoAtentoRapido","l":"PrincipalAtentoRapido"}];updateSearchResults();

@@ -60,10 +60,14 @@ public class GUIAtentoRapido extends JFrame{
 	
 	private int tiempo;
 	
+	
+	//Metodos
 	/**
 	 * Instantiates a new GUI atento rapido.
+	 * 
+	 * Constructor de la clase:
+	 * Inicializa el timer, escucha, control, etc. Lo básico para el funcionamiento.
 	 */
-	//Metodos
 	public GUIAtentoRapido() {
 		
 		this.tiempo = 3000;
@@ -92,6 +96,8 @@ public class GUIAtentoRapido extends JFrame{
 	
 	/**
 	 * Inits the.
+	 * 
+	 * Primer pantalla a mostrar, da la opción de jugar.
 	 */
 	public void init(){
 		//Set up container - layout
@@ -119,6 +125,8 @@ public class GUIAtentoRapido extends JFrame{
 	
 	/**
 	 * Juego.
+	 * 
+	 * GUI del juego, aquí se muestran todos los elementos de este.
 	 */
 	public void juego() {
 		//Set up container - layout
@@ -276,6 +284,8 @@ public class GUIAtentoRapido extends JFrame{
 	
 	/**
 	 * End.
+	 * 
+	 * Última pantalla, se muestra al terminar el juego, ya sea por ganar o perder.
 	 */
 	public void end() {
 		Container contenedor= this.getContentPane();
@@ -310,6 +320,9 @@ public class GUIAtentoRapido extends JFrame{
 	
 	/**
 	 * Borrar juego.
+	 * 
+	 * Se encarga de borrar todos los componentes gráficos de Juego() al terminarlo,
+	 * para limpiar la pantalla.
 	 */
 	public void borrarJuego() {
 		this.tempo.stop();
@@ -334,6 +347,7 @@ public class GUIAtentoRapido extends JFrame{
 	
 	/**
 	 * Opcion.
+	 * A partir del estado de juego se activa un componente gráfico, segun sea este.
 	 */
 	public void opcion() {
 		switch(control.getEstado()) {
@@ -357,6 +371,8 @@ public class GUIAtentoRapido extends JFrame{
 	
 	/**
 	 * The Class Escucha.
+	 * 
+	 * Implementación de escuchas de los componentes gráficos.
 	 */
 	private class Escucha implements ActionListener{
 
@@ -364,6 +380,18 @@ public class GUIAtentoRapido extends JFrame{
 		 * Action performed.
 		 *
 		 * @param eventAction the event action
+		 * 
+		 * A partir de las una acción generada ya sea por el usuario o el timer,
+		 * se identificará y se hará una acción en especifíco para esa acción generada.
+		 * 
+		 * Inicio: se da en el boton jugar y abre paso a la pantalla de juego.
+		 * 
+		 * Juego, se divide en 5 partes:
+		 * 	1. cambio de los bordes de un cuadro.
+		 * 	2. cambio de cuadro y verificación de acción al cambiarlo, esto en el timer de cambio.
+		 * 	3. pulsor, actualización de componentes gráficos, revisión de la decisión del usuario,
+		 * 	4. escucha de abandonar juego.
+		 * 	5. escucha de reiniciar juego. 
 		 */
 		@Override
 		public void actionPerformed(ActionEvent eventAction) {

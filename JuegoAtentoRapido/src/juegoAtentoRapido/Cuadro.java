@@ -17,6 +17,8 @@ import java.util.Random;
 
 /**
  * The Class Cuadro.
+ * 
+ * Se da un asigna color y se retorna.
  */
 public class Cuadro {
 
@@ -27,6 +29,10 @@ public class Cuadro {
 	 * Gets the color cuadro.
 	 *
 	 * @return the color cuadro
+	 * 
+	 * Se genera un aleatorio de 1 a 10,
+	 * cada número corresponde a un color (string)
+	 * y se retorna el asignado.
 	 */
 	//Metodos
 	public String getColorCuadro() {

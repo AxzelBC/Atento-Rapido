@@ -34,6 +34,8 @@ public class ControlAtentoRapido {
 	
 	/**
 	 * Instantiates a new control atento rapido.
+	 * 
+	 * Constructor de la clase, inicializa las variables para el estado default del juego.
 	 */
 	public ControlAtentoRapido() {
 		cuadro = new Cuadro();
@@ -53,6 +55,8 @@ public class ControlAtentoRapido {
 	
 	/**
 	 * Sacar cuadros.
+	 * 
+	 * Llena el array String con los cuadros sin repetir colores.
 	 */
 	public void sacarCuadros() {
 		for (int i = 0; i<nCuadros; i++) {
@@ -75,6 +79,8 @@ public class ControlAtentoRapido {
 	
 	/**
 	 * Escoger cuadro.
+	 * 
+	 * Escoje un cuadro al azar y lo guarda en prox.
 	 */
 	public void escogerCuadro() {
 		Random cualquier = new Random();
@@ -86,6 +92,7 @@ public class ControlAtentoRapido {
 	 * Cambiar cuadro.
 	 *
 	 * @param index the index
+	 * Cambia un cuadro del arreglo en la posición solicitada.
 	 */
 	public void cambiarCuadro(int index) {
 		cuadros[index] = cuadro.getColorCuadro();
@@ -94,6 +101,11 @@ public class ControlAtentoRapido {
 	
 	/**
 	 * Estado juego.
+	 * 
+	 * revisa en que estado está el juego:
+	 * Ganó = 1
+	 * Perdió = 2
+	 * Sigue = 3
 	 */
 	public void estadoJuego() {
 		if(movimientos==false) {
@@ -117,6 +129,8 @@ public class ControlAtentoRapido {
 	
 	/**
 	 * Comparar cuadros.
+	 * 
+	 * Revisa el array de Cuadros buscando si hay 2 iguales
 	 */
 	public void compararCuadros() {
 		iguales = false;
@@ -134,7 +148,12 @@ public class ControlAtentoRapido {
 	/**
 	 * Logro dar.
 	 *
-	 * @param quien the quien
+	 * @param quien, quien activo la función: usuario o tiempo.
+	 * 
+	 * revisa si el usuario o la maquina dió a iguales,
+	 * Si fue el usuario, le adiciona puntos y determina sí sube de nivel.
+	 * si fue la maquina, resta vida y aumenta errores.
+	 * sino fue ninguno se sigue el juego.
 	 */
 	public void logroDar(boolean quien) {
 		this.usuario = quien;
@@ -198,6 +217,8 @@ public class ControlAtentoRapido {
 	
 	/**
 	 * Sets the abandonar.
+	 * 
+	 * Cambia el juego a perdido y lo termina.
 	 */
 	public void setAbandonar() {
 		estado=2;
@@ -207,6 +228,8 @@ public class ControlAtentoRapido {
 	
 	/**
 	 * Sets the reinicio.
+	 * 
+	 * Redefine las variables de juego al por defecto.
 	 */
 	public void setReinicio() {
 		cuadro = new Cuadro();
@@ -225,11 +248,11 @@ public class ControlAtentoRapido {
 
 ///////////////////////////////////////////////////////////////////////////////
 	
-/**
- * Gets the vidas.
- *
- * @return the vidas
- */
+	/**
+	 * Gets the vidas.
+	 *
+	 * @return the vidas
+	 */
 	public int getVidas() {
 		return vidas;
 	}
